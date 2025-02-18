@@ -6,6 +6,7 @@ A simple web-based tool that generates CSV reports of messages from a Discord se
 - Fetches messages from all text channels in a specified Discord server
 - Provides a web UI for selecting the report period
 - Generates CSV reports for easy analysis
+- Reports only include **channel name, username, and message timestamp** (message content is **not** included)
 - Runs in a Docker container for easy deployment
 
 ## Prerequisites
@@ -50,6 +51,7 @@ http://localhost:5000
 ## Notes
 - Ensure your bot has **Read Message History** and **View Channels** permissions for all channels.
 - Reports are saved inside the `static/` directory within the container.
+- **Message content is not included in reports—only channel name, username, and timestamp.**
 
 ## License
 MIT License.
