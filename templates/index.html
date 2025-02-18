@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Discord Reporter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+    <script>
+        function getDefaultDate() {
+            let today = new Date();
+            let currentYear = today.getFullYear();
+            let previousMonth = today.getMonth(); // JavaScript months are 0-based
+            if (previousMonth === 0) {
+                previousMonth = 12;
+                currentYear -= 1;
+            }
+            document.getElementById("year").value = currentYear;
+            document.getElementById("month").value = previousMonth;
+        }
+        async function loadGuildInfo() {
+            let response = await fetch("/get_guild_info");
+            let data = await response.json();
+            document.getElementById("guild_id").innerText = "Guild ID: " + data.guild_id;
+            document.getElementById("guild_name").innerText = "Guild Name: " + data.guild_name;
+        }
+        window.onload = function() {
+            getDefaultDate();
+            loadGuildInfo();
+        };
+    </script>
+</head>
+<body>
+    <h1>Discord Reporter</h1>
+    <p id="guild_name"></p>
+    <form method="post">
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required>
+        
+        <label for="month">Month:</label>
+        <select id="month" name="month" required>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+        
+        <button type="submit">Get Report</button>
+    </form>
+    
+    {% if config['YEAR'] and config['MONTH'] %}
+        <h2>Download Report</h2>
+        <a href="/download/{{ config['YEAR'] }}/{{ config['MONTH'] }}" download>Download CSV</a>
+    {% endif %}
+
+    <br><br>
+    <p id="guild_id"></p>
+</body>
+</html>
