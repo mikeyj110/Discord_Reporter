@@ -20,7 +20,7 @@ cd discord-reporter
 ```
 
 ### 2. Configure the Environment Variables
-Copy the provided `config.env` file and fill in your bot token and guild ID:
+Copy the provided `config.env` file and fill in your bot token and server/guild ID:
 ```sh
 cp config.env.example config.env
 ```
